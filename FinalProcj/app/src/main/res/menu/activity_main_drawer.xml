@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gal"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_getroom"
+            android:icon="@drawable/ic_menu_bed"
+            android:title="GetRoom" />
+        <item
+            android:id="@+id/nav_getmap"
+            android:icon="@drawable/ic_menu_loc"
+            android:title="GetMap" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_menu_info"
+            android:title="Information" />
+    </group>
+
+    <item android:title="Application">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="About" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_menu_exit"
+                android:title="Exit" />
+        </menu>
+    </item>
+
+</menu>

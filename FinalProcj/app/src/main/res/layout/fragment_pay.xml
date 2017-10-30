@@ -1,0 +1,127 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    tools:context="com.example.lukman.finalprocj.PayFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Your Name"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/txtname"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:hint="Enter Your Name"
+        android:textColor="#000000"
+        android:id="@+id/etname"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="Your Have Order"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/txtannoun"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="Class Room          : "
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text=""
+        android:layout_marginLeft="120dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/txtnametype"/>
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="Class"
+        android:layout_marginLeft="180dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="Bed Type               :"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text=""
+        android:layout_marginLeft="120dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/txtbedtype"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:text="Qty Room              :"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:text=""
+        android:layout_marginLeft="120dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/txtqtyroom"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
+        android:text="Cost Order             :"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
+        android:text=""
+        android:layout_marginLeft="120dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/txtcostroom"/>
+
+    <Button
+        android:id="@+id/btnorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:background="?attr/colorPrimary"
+        android:text="Order" />
+    <Button
+        android:id="@+id/btncancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="310dp"
+        android:background="?attr/colorAccent"
+        android:text="Cancel" />
+
+
+</FrameLayout>

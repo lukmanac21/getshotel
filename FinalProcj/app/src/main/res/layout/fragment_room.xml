@@ -1,0 +1,191 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    tools:context="com.example.lukman.finalprocj.RoomFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtselecttype"
+        android:text="Select Type Room"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="20dp"/>
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:id="@+id/spinnertype"></Spinner>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtselectbed"
+        android:text="Select Bed"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="90dp"/>
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:id="@+id/spinnerbed"></Spinner>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtqtyroom"
+        android:text="Avaiable Room :"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="160dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hslqtyroom"
+        android:text=""
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="160dp"
+        android:paddingLeft="110dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/exqtyroom"
+        android:text="Room Avaiable"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="160dp"
+        android:paddingLeft="130dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/exqtyroomchose"
+        android:text="Choose Quantity"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="205dp"
+        />
+    <Button
+        android:id="@+id/minusqty"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="190dp"
+        android:layout_marginLeft="120dp"
+        android:text="-"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:background="@drawable/round_btn"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/txtqtyrm"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:paddingTop="205dp"
+        android:layout_marginLeft="195dp"
+        />
+    <Button
+        android:id="@+id/plsqty"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="190dp"
+        android:background="@drawable/round_btn"
+        android:text="+"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:text="Date In"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="100dp"
+        android:hint="Choose Date In"
+        android:id="@+id/etdatein"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date Out"
+        android:layout_marginTop="290dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etdateout"
+        android:hint="Choose Date Out"
+        android:layout_marginTop="290dp"
+        android:layout_marginLeft="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lenght Of Stay"
+        android:layout_marginTop="330dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtbetween"
+        android:layout_marginTop="330dp"
+        android:layout_marginLeft="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cost Room"
+        android:layout_marginTop="370dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtcost"
+        android:layout_marginTop="370dp"
+        android:layout_marginLeft="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Cost"
+        android:layout_marginTop="410dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txttotalcost"
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:id="@+id/btnpesan"
+        android:text="Order Now"
+        android:textStyle="bold"
+        android:textColor="#f9f5f5"
+        android:background="?attr/colorPrimary"/>
+
+</FrameLayout>
