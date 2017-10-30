@@ -38,7 +38,7 @@ public class RoomFragment extends Fragment {
     String TAG = "Fragment Room";
     ArrayAdapter<String> typeroom, bedroom;
     Spinner spinnertype, spinnerbed;
-    int jumlah=0, qty = 0, cost, total;
+    int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari;
     Button min, plus;
     TextView qtyday, qtybed , DisplayDateIn, DisplayDateOut,qtyroom, costroom ,totalcost;
     DatePickerDialog.OnDateSetListener DateListenerOut,DateListenerIn;
@@ -153,15 +153,9 @@ public class RoomFragment extends Fragment {
                 UpdateNight();
             }
         };
-        if (costroom != null && qtyroom!= null){
-            totalCost();
-        }
+
 
         return v;
-    }
-    public void totalCost (){
-        total = Integer.parseInt(String.valueOf(qtyroom)) * Integer.parseInt(String.valueOf(costroom));
-        totalcost.setText(total);
     }
     private class klik_plus implements View.OnClickListener{
 
@@ -171,6 +165,10 @@ public class RoomFragment extends Fragment {
             }
             else{
                 jumlah++;
+                costnew = Integer.parseInt(costroom.getText().toString());
+                totalhari = Integer.parseInt(qtyday.getText().toString());
+                total = costnew * totalhari;
+                totalcost.setText(Integer.toString(total));
             }
             qtyroom.setText(Integer.toString(jumlah));
         }
@@ -181,6 +179,10 @@ public class RoomFragment extends Fragment {
                 jumlah = 0;
             }else {
                 jumlah--;
+                costnew = Integer.parseInt(costroom.getText().toString());
+                totalhari = Integer.parseInt(qtyday.getText().toString());
+                total = costnew * totalhari;
+                totalcost.setText(Integer.toString(total));
             }
             qtyroom.setText(Integer.toString(jumlah));
 
@@ -190,7 +192,7 @@ public class RoomFragment extends Fragment {
     public void UpdateNight(){
         try{ String QtyNight = QtyDay(createDateString(DisplayDateIn.getText().toString()),
                 createDateString(DisplayDateOut.getText().toString()));
-                qtyday.setText(QtyNight + " Days");
+                qtyday.setText(QtyNight);
                 }
         catch (Exception e){
         }
