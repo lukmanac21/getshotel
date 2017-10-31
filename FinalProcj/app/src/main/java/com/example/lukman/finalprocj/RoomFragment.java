@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
+import java.util.*;
 
 import java.sql.Array;
 import org.w3c.dom.Text;
@@ -36,11 +37,12 @@ public class RoomFragment extends Fragment {
     String [] type = {"-Select Type-","VIP", "Economy"};
     String [] bed = {"-Select Bed-","Single Bed", "Double Bed"};
     String TAG = "Fragment Room";
+    String datein, dateout;
     ArrayAdapter<String> typeroom, bedroom;
     Spinner spinnertype, spinnerbed;
-    int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari;
+    int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari, totalcost2,qtyday2;
     Button min, plus;
-    TextView qtyday, qtybed , DisplayDateIn, DisplayDateOut,qtyroom, costroom ,totalcost;
+    TextView qtyday, qtybed , DisplayDateIn, DisplayDateOut,qtyroom, costroom ,totalcost, totalall;
     DatePickerDialog.OnDateSetListener DateListenerOut,DateListenerIn;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class RoomFragment extends Fragment {
         qtyroom =(TextView) v.findViewById(R.id.txtqtyrm);
         costroom = (TextView) v.findViewById(R.id.txtcost);
         totalcost = (TextView) v.findViewById(R.id.txttotalcost);
+        totalall = (TextView) v.findViewById(R.id.txttotalcost2);
         plus = (Button) v.findViewById(R.id.plsqty);
         plus.setOnClickListener(new klik_plus());
         min = (Button) v.findViewById(R.id.minusqty);
@@ -112,7 +115,7 @@ public class RoomFragment extends Fragment {
                         DateListenerIn,
                         year,month,day
                 );
-                dialogin.setMinDate(System.currentTimeMillis());
+                dialogin.getDatePicker().setMinDate(c.getTimeInMillis());
                 dialogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialogin.show();
             }
@@ -120,18 +123,25 @@ public class RoomFragment extends Fragment {
         DisplayDateOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar a = Calendar.getInstance();
-                int year = a.get(Calendar.YEAR);
-                int month = a.get(Calendar.MONTH);
-                int day = a.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialogout = new DatePickerDialog(
-                        getActivity(),
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        DateListenerOut,
-                        year,month,day
-                );
-                dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialogout.show();
+
+                    final Calendar a = Calendar.getInstance();
+                    int year = a.get(Calendar.YEAR);
+                    int month = a.get(Calendar.MONTH);
+                    int day = a.get(Calendar.DAY_OF_MONTH);
+                    DatePickerDialog dialogout = new DatePickerDialog(
+                            getActivity(),
+                            android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                            DateListenerOut,
+                            year, month, day
+                    );
+                /*if (DisplayDateIn == null){
+                    Toast.makeText(getActivity(),"Take Your Date In First",Toast.LENGTH_LONG).show();
+                }
+                else{*/
+                    /**//*dialogout.getDatePicker().setMinDate(a.getTimeInMillis()+ Integer.parseInt(String.valueOf(DisplayDateIn)));*/
+                    dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialogout.show();
+                /*}*/
             }
         });
         DateListenerIn = new DatePickerDialog.OnDateSetListener() {
@@ -139,23 +149,39 @@ public class RoomFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month= month+1;
                 Log.d(TAG ,"onDateSet:mm/dd/yyy"+day+"/"+month+"/"+year);
-                String date =day+"/"+month+"/"+year;
-                DisplayDateIn.setText(date);
-
+                datein =day+"/"+month+"/"+year;
+                DisplayDateIn.setText(datein);
             }
         };
         DateListenerOut = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month= month+1;
-                Log.d(TAG ,"onDateSet:mm/dd/yyy"+day+"/"+month+"/"+year);
-                String date =day+"/"+month+"/"+year;
-                DisplayDateOut.setText(date);
-                UpdateNight();
+                /*if (DisplayDateIn == null) {
+                    Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
+                } else {*/
+                    if(!DisplayDateIn.getText().toString().matches("")){
+                        month = month + 1;
+                        Log.d(TAG, "onDateSet:mm/dd/yyy" + day + "/" + month + "/" + year);
+                        dateout = day + "/" + month + "/" + year;
+                        DisplayDateOut.setText(dateout);
+                        UpdateNight();
+
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
+                    }
+                /*}*/
             }
         };
+        if (qtyday.getText().equals("") || qtyday.getText() == null){
+            total_bayar= 0;
+        }
+        else{
+            qtyday2 = Integer.parseInt(qtyday.getText().toString());
+            totalcost2 = Integer.parseInt(totalcost.getText().toString());
+            total_bayar =   qtyday2 * totalcost2;
 
-
+        }
         return v;
     }
     private class klik_plus implements View.OnClickListener{

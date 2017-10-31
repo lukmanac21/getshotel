@@ -164,7 +164,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Cost"
+        android:text="SUb Cost"
         android:layout_marginTop="410dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
@@ -176,12 +176,25 @@
         android:layout_marginLeft="100dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Cost"
+        android:layout_marginTop="450dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txttotalcost2"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="480dp"
         android:id="@+id/btnpesan"
         android:text="Order Now"
         android:textStyle="bold"
