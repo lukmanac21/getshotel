@@ -112,6 +112,7 @@ public class RoomFragment extends Fragment {
                         DateListenerIn,
                         year,month,day
                 );
+                dialogin.setMinDate(System.currentTimeMillis());
                 dialogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialogin.show();
             }
