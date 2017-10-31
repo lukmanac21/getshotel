@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import java.text.DateFormat;
 import java.util.*;
 
 import java.sql.Array;
@@ -124,6 +126,8 @@ public class RoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if(!DisplayDateIn.getText().toString().matches("")) {
+
                     final Calendar a = Calendar.getInstance();
                     int year = a.get(Calendar.YEAR);
                     int month = a.get(Calendar.MONTH);
@@ -134,22 +138,38 @@ public class RoomFragment extends Fragment {
                             DateListenerOut,
                             year, month, day
                     );
-                /*if (DisplayDateIn == null){
-                    Toast.makeText(getActivity(),"Take Your Date In First",Toast.LENGTH_LONG).show();
+                    /*if (DisplayDateIn == null){
+                        Toast.makeText(getActivity(),"Take Your Date In First",Toast.LENGTH_LONG).show();
+                    }
+                    else{*/
+                        /**//*dialogout.getDatePicker().setMinDate(a.getTimeInMillis()+ Integer.parseInt(String.valueOf(DisplayDateIn)));*/
+
+
+                        Calendar date;
+                        try {
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                            a.setTime(formatter.parse(DisplayDateIn.getText().toString()));
+                            Log.d("Date Out Min", a.toString());
+                        }
+                        catch (Exception e) {
+                            //
+                        }
+                        dialogout.getDatePicker().setMinDate(a.getTimeInMillis());
+                        dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialogout.show();
+                    /*}*/
                 }
-                else{*/
-                    /**//*dialogout.getDatePicker().setMinDate(a.getTimeInMillis()+ Integer.parseInt(String.valueOf(DisplayDateIn)));*/
-                    dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialogout.show();
-                /*}*/
+                else {
+                    Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
+                }
             }
         });
         DateListenerIn = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month= month+1;
-                Log.d(TAG ,"onDateSet:mm/dd/yyy"+day+"/"+month+"/"+year);
-                datein =day+"/"+month+"/"+year;
+                datein = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
+                Log.d("Date In", datein);
                 DisplayDateIn.setText(datein);
             }
         };
@@ -161,11 +181,10 @@ public class RoomFragment extends Fragment {
                 } else {*/
                     if(!DisplayDateIn.getText().toString().matches("")){
                         month = month + 1;
-                        Log.d(TAG, "onDateSet:mm/dd/yyy" + day + "/" + month + "/" + year);
-                        dateout = day + "/" + month + "/" + year;
+                        dateout = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
+                        Log.d("Date Out", dateout);
                         DisplayDateOut.setText(dateout);
                         UpdateNight();
-
                     }
                     else {
                         Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
@@ -282,6 +301,12 @@ public class RoomFragment extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Get Room");
     };
+
+    public static Calendar DateToCalendar(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
 
 
 }
