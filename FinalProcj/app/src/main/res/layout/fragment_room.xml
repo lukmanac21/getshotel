@@ -64,17 +64,32 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Cost Room"
+        android:layout_marginTop="200dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtcost"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/exqtyroomchose"
         android:text="Choose Quantity"
         android:textStyle="bold"
         android:textColor="#000000"
-        android:paddingTop="205dp"
+        android:paddingTop="240dp"
         />
     <Button
         android:id="@+id/minusqty"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="220dp"
         android:layout_marginLeft="120dp"
         android:text="-"
         android:textColor="#000000"
@@ -88,7 +103,7 @@
         android:id="@+id/txtqtyrm"
         android:textStyle="bold"
         android:textColor="#000000"
-        android:paddingTop="205dp"
+        android:paddingTop="230dp"
         android:layout_marginLeft="195dp"
         />
     <Button
@@ -96,20 +111,20 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="220dp"
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="220dp"
         android:background="@drawable/round_btn"
         android:text="+"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="275dp"
         android:text="Date In"
         android:textStyle="bold"
         android:textColor="#000000"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="275dp"
         android:layout_marginLeft="100dp"
         android:hint="Choose Date In"
         android:id="@+id/etdatein"
@@ -119,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Date Out"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="315dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
     <TextView
@@ -127,7 +142,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/etdateout"
         android:hint="Choose Date Out"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="315dp"
         android:layout_marginLeft="100dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
@@ -135,66 +150,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Lenght Of Stay"
-        android:layout_marginTop="330dp"
+        android:layout_marginTop="355dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtbetween"
-        android:layout_marginTop="330dp"
+        android:layout_marginTop="355dp"
         android:layout_marginLeft="100dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cost Room"
-        android:layout_marginTop="370dp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtcost"
-        android:layout_marginTop="370dp"
-        android:layout_marginLeft="100dp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SUb Cost"
-        android:layout_marginTop="410dp"
+        android:text="Cost"
+        android:layout_marginTop="395dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txttotalcost"
-        android:layout_marginTop="410dp"
+        android:layout_marginTop="395dp"
         android:layout_marginLeft="100dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Cost"
-        android:layout_marginTop="450dp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txttotalcost2"
-        android:layout_marginTop="450dp"
-        android:layout_marginLeft="100dp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="480dp"
+        android:layout_marginTop="440dp"
         android:id="@+id/btnpesan"
         android:text="Order Now"
         android:textStyle="bold"

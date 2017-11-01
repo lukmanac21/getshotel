@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import java.text.DateFormat;
 import java.util.*;
 
 import java.sql.Array;
@@ -40,7 +42,7 @@ public class RoomFragment extends Fragment {
     String datein, dateout;
     ArrayAdapter<String> typeroom, bedroom;
     Spinner spinnertype, spinnerbed;
-    int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari, totalcost2,qtyday2;
+    int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari, totalcost2,qtyday2,qtyrooms;
     Button min, plus;
     TextView qtyday, qtybed , DisplayDateIn, DisplayDateOut,qtyroom, costroom ,totalcost, totalall;
     DatePickerDialog.OnDateSetListener DateListenerOut,DateListenerIn;
@@ -52,7 +54,6 @@ public class RoomFragment extends Fragment {
         qtyroom =(TextView) v.findViewById(R.id.txtqtyrm);
         costroom = (TextView) v.findViewById(R.id.txtcost);
         totalcost = (TextView) v.findViewById(R.id.txttotalcost);
-        totalall = (TextView) v.findViewById(R.id.txttotalcost2);
         plus = (Button) v.findViewById(R.id.plsqty);
         plus.setOnClickListener(new klik_plus());
         min = (Button) v.findViewById(R.id.minusqty);
@@ -124,6 +125,8 @@ public class RoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if(!DisplayDateIn.getText().toString().matches("")) {
+
                     final Calendar a = Calendar.getInstance();
                     int year = a.get(Calendar.YEAR);
                     int month = a.get(Calendar.MONTH);
@@ -134,54 +137,51 @@ public class RoomFragment extends Fragment {
                             DateListenerOut,
                             year, month, day
                     );
-                /*if (DisplayDateIn == null){
-                    Toast.makeText(getActivity(),"Take Your Date In First",Toast.LENGTH_LONG).show();
-                }
-                else{*/
-                    /**//*dialogout.getDatePicker().setMinDate(a.getTimeInMillis()+ Integer.parseInt(String.valueOf(DisplayDateIn)));*/
+                    Calendar date;
+                    try {
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                        a.setTime(formatter.parse(DisplayDateIn.getText().toString()));
+                        Log.d("Date Out Min", a.toString());
+                    }
+                    catch (Exception e) {
+                        //
+                    }
+                    dialogout.getDatePicker().setMinDate(a.getTimeInMillis());
                     dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialogout.show();
-                /*}*/
+                }
+                else {
+                    Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
+                }
             }
         });
         DateListenerIn = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month= month+1;
-                Log.d(TAG ,"onDateSet:mm/dd/yyy"+day+"/"+month+"/"+year);
-                datein =day+"/"+month+"/"+year;
+                datein = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
+                Log.d("Date In", datein);
                 DisplayDateIn.setText(datein);
+                hitungTotal();
             }
         };
         DateListenerOut = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                /*if (DisplayDateIn == null) {
+                if(!DisplayDateIn.getText().toString().matches("")){
+                    month = month + 1;
+                    dateout = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
+                    Log.d("Date Out", dateout);
+                    DisplayDateOut.setText(dateout);
+                    String QtyNight = QtyDay(createDateString(DisplayDateIn.getText().toString()), createDateString(DisplayDateOut.getText().toString()));
+                    qtyday.setText(QtyNight);
+                    hitungTotal();
+                }
+                else {
                     Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
-                } else {*/
-                    if(!DisplayDateIn.getText().toString().matches("")){
-                        month = month + 1;
-                        Log.d(TAG, "onDateSet:mm/dd/yyy" + day + "/" + month + "/" + year);
-                        dateout = day + "/" + month + "/" + year;
-                        DisplayDateOut.setText(dateout);
-                        UpdateNight();
-
-                    }
-                    else {
-                        Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
-                    }
-                /*}*/
+                }
             }
         };
-        if (qtyday.getText().equals("") || qtyday.getText() == null){
-            total_bayar= 0;
-        }
-        else{
-            qtyday2 = Integer.parseInt(qtyday.getText().toString());
-            totalcost2 = Integer.parseInt(totalcost.getText().toString());
-            total_bayar =   qtyday2 * totalcost2;
-
-        }
         return v;
     }
     private class klik_plus implements View.OnClickListener{
@@ -192,10 +192,7 @@ public class RoomFragment extends Fragment {
             }
             else{
                 jumlah++;
-                costnew = Integer.parseInt(costroom.getText().toString());
-                totalhari = Integer.parseInt(qtyday.getText().toString());
-                total = costnew * totalhari;
-                totalcost.setText(Integer.toString(total));
+                hitungTotal();
             }
             qtyroom.setText(Integer.toString(jumlah));
         }
@@ -206,30 +203,18 @@ public class RoomFragment extends Fragment {
                 jumlah = 0;
             }else {
                 jumlah--;
-                costnew = Integer.parseInt(costroom.getText().toString());
-                totalhari = Integer.parseInt(qtyday.getText().toString());
-                total = costnew * totalhari;
-                totalcost.setText(Integer.toString(total));
+                hitungTotal();
             }
             qtyroom.setText(Integer.toString(jumlah));
 
         }
 
     }
-    public void UpdateNight(){
-        try{ String QtyNight = QtyDay(createDateString(DisplayDateIn.getText().toString()),
-                createDateString(DisplayDateOut.getText().toString()));
-                qtyday.setText(QtyNight);
-                }
-        catch (Exception e){
-        }
-
-    }
     public String QtyDay(Date in, Date out) {
         long timeIn = in.getTime();
         long timeOut = out.getTime();
-        long oneday = 1000 * 60 * 60 * 24;
-        long delta = (timeOut - timeIn) / oneday;
+        long oneday = 60 * 60 * 24 * 1000;
+        long delta = (timeOut - timeIn)/ oneday;
         if (delta > 0 ) {
             return String.valueOf(delta);
         } else {
@@ -238,7 +223,7 @@ public class RoomFragment extends Fragment {
     }
     private Date createDateString(String dateString){
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         try {
             date = format.parse(dateString);
             System.out.println(date);
@@ -255,24 +240,29 @@ public class RoomFragment extends Fragment {
             qtybed.setText(Integer.toString(qty));
             cost = 250000;
             costroom.setText(Integer.toString(cost));
+            hitungTotal();
+
         }
         else if (roomtype.equals("Economy") && roombed.equals("Double Bed")){
             qty=25;
             qtybed.setText(Integer.toString(qty));
             cost = 300000;
             costroom.setText(Integer.toString(cost));
+            hitungTotal();
         }
         else if (roomtype.equals("VIP") && roombed.equals("Single Bed")){
             qty=10;
             qtybed.setText(Integer.toString(qty));
             cost = 450000;
             costroom.setText(Integer.toString(cost));
+            hitungTotal();
         }
         else if (roomtype.equals("VIP") && roombed.equals("Double Bed")){
             qty = 15;
             qtybed.setText(Integer.toString(qty));
             cost = 500000;
             costroom.setText(Integer.toString(cost));
+            hitungTotal();
         }
     }
 
@@ -282,6 +272,24 @@ public class RoomFragment extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Get Room");
     };
+
+    public static Calendar DateToCalendar(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+    public void hitungTotal(){
+        if(qtyday.getText().toString().matches("")){
+            totalcost.setText("0");
+        }
+        else {
+            qtyday2 = Integer.parseInt(qtyday.getText().toString());
+            qtyrooms = Integer.parseInt(qtyroom.getText().toString());
+            costnew = Integer.parseInt(costroom.getText().toString());
+            total = costnew * qtyrooms * qtyday2;
+            totalcost.setText(Integer.toString(total));
+        }
+    }
 
 
 }
