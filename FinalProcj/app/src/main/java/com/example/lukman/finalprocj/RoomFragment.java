@@ -149,26 +149,7 @@ public class RoomFragment extends Fragment {
                     dialogout.getDatePicker().setMinDate(a.getTimeInMillis());
                     dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialogout.show();
-                    /*if (DisplayDateIn == null){
-                        Toast.makeText(getActivity(),"Take Your Date In First",Toast.LENGTH_LONG).show();
-                    }
-                    else{*/
-                        /**//*dialogout.getDatePicker().setMinDate(a.getTimeInMillis()+ Integer.parseInt(String.valueOf(DisplayDateIn)));*/
-
-
-                        Calendar date;
-                        try {
-                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-                            a.setTime(formatter.parse(DisplayDateIn.getText().toString()));
-                            Log.d("Date Out Min", a.toString());
-                        }
-                        catch (Exception e) {
-                            //
-                        }
-                        dialogout.getDatePicker().setMinDate(a.getTimeInMillis());
-                        dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        dialogout.show();
-                    /*}*/                }
+                }
                 else {
                     Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
                 }
@@ -181,7 +162,11 @@ public class RoomFragment extends Fragment {
                 datein = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
                 Log.d("Date In", datein);
                 DisplayDateIn.setText(datein);
-                hitungTotal();
+                if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                    totalcost.setText("0");
+                }else {
+                    hitungTotal();
+                }
             }
         };
         DateListenerOut = new DatePickerDialog.OnDateSetListener() {
@@ -194,23 +179,15 @@ public class RoomFragment extends Fragment {
                     DisplayDateOut.setText(dateout);
                     String QtyNight = QtyDay(createDateString(DisplayDateIn.getText().toString()), createDateString(DisplayDateOut.getText().toString()));
                     qtyday.setText(QtyNight);
-                    hitungTotal();
+                    if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                        totalcost.setText("0");
+                    }else {
+                        hitungTotal();
+                    }
                 }
                 else {
                     Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
                 }
-                } else {*/
-                    if(!DisplayDateIn.getText().toString().matches("")){
-                        month = month + 1;
-                        dateout = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
-                        Log.d("Date Out", dateout);
-                        DisplayDateOut.setText(dateout);
-                        UpdateNight();
-                    }
-                    else {
-                        Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
-                    }
-                /*}*/
             }
         };
         return v;
@@ -223,7 +200,11 @@ public class RoomFragment extends Fragment {
             }
             else{
                 jumlah++;
-                hitungTotal();
+                if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                    totalcost.setText("0");
+                }else {
+                    hitungTotal();
+                }
             }
             qtyroom.setText(Integer.toString(jumlah));
         }
@@ -234,7 +215,11 @@ public class RoomFragment extends Fragment {
                 jumlah = 0;
             }else {
                 jumlah--;
-                hitungTotal();
+                if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                    totalcost.setText("0");
+                }else {
+                    hitungTotal();
+                }
             }
             qtyroom.setText(Integer.toString(jumlah));
 
@@ -271,7 +256,11 @@ public class RoomFragment extends Fragment {
             qtybed.setText(Integer.toString(qty));
             cost = 250000;
             costroom.setText(Integer.toString(cost));
-            hitungTotal();
+            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                totalcost.setText("0");
+            }else {
+                hitungTotal();
+            }
 
         }
         else if (roomtype.equals("Economy") && roombed.equals("Double Bed")){
@@ -279,21 +268,33 @@ public class RoomFragment extends Fragment {
             qtybed.setText(Integer.toString(qty));
             cost = 300000;
             costroom.setText(Integer.toString(cost));
-            hitungTotal();
+            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                totalcost.setText("0");
+            }else {
+                hitungTotal();
+            }
         }
         else if (roomtype.equals("VIP") && roombed.equals("Single Bed")){
             qty=10;
             qtybed.setText(Integer.toString(qty));
             cost = 450000;
             costroom.setText(Integer.toString(cost));
-            hitungTotal();
+            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                totalcost.setText("0");
+            }else {
+                hitungTotal();
+            }
         }
         else if (roomtype.equals("VIP") && roombed.equals("Double Bed")){
             qty = 15;
             qtybed.setText(Integer.toString(qty));
             cost = 500000;
             costroom.setText(Integer.toString(cost));
-            hitungTotal();
+            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                totalcost.setText("0");
+            }else {
+                hitungTotal();
+            }
         }
     }
 
@@ -310,15 +311,13 @@ public class RoomFragment extends Fragment {
         return cal;
     }
     public void hitungTotal(){
-        if(qtyday.getText().toString().matches("")){
-            totalcost.setText("0");
-        }
-        else {
+
             qtyday2 = Integer.parseInt(qtyday.getText().toString());
             qtyrooms = Integer.parseInt(qtyroom.getText().toString());
             costnew = Integer.parseInt(costroom.getText().toString());
             total = costnew * qtyrooms * qtyday2;
             totalcost.setText(Integer.toString(total));
-        }
     }
+
+
 }
