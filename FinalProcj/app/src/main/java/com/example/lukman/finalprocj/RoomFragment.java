@@ -137,7 +137,6 @@ public class RoomFragment extends Fragment {
                             DateListenerOut,
                             year, month, day
                     );
-<<<<<<< HEAD
                     Calendar date;
                     try {
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -150,7 +149,6 @@ public class RoomFragment extends Fragment {
                     dialogout.getDatePicker().setMinDate(a.getTimeInMillis());
                     dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialogout.show();
-=======
                     /*if (DisplayDateIn == null){
                         Toast.makeText(getActivity(),"Take Your Date In First",Toast.LENGTH_LONG).show();
                     }
@@ -170,9 +168,7 @@ public class RoomFragment extends Fragment {
                         dialogout.getDatePicker().setMinDate(a.getTimeInMillis());
                         dialogout.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialogout.show();
-                    /*}*/
->>>>>>> cca51d6b17168a9c6c4a32c39d0b9800194a39dc
-                }
+                    /*}*/                }
                 else {
                     Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
                 }
@@ -202,9 +198,7 @@ public class RoomFragment extends Fragment {
                 }
                 else {
                     Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
-<<<<<<< HEAD
                 }
-=======
                 } else {*/
                     if(!DisplayDateIn.getText().toString().matches("")){
                         month = month + 1;
@@ -217,7 +211,6 @@ public class RoomFragment extends Fragment {
                         Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
                     }
                 /*}*/
->>>>>>> cca51d6b17168a9c6c4a32c39d0b9800194a39dc
             }
         };
         return v;
@@ -316,7 +309,6 @@ public class RoomFragment extends Fragment {
         cal.setTime(date);
         return cal;
     }
-<<<<<<< HEAD
     public void hitungTotal(){
         if(qtyday.getText().toString().matches("")){
             totalcost.setText("0");
@@ -329,8 +321,4 @@ public class RoomFragment extends Fragment {
             totalcost.setText(Integer.toString(total));
         }
     }
-=======
->>>>>>> cca51d6b17168a9c6c4a32c39d0b9800194a39dc
-
-
 }
