@@ -1,14 +1,18 @@
 package com.example.lukman.finalprocj;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.SharedPreferencesCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,64 +39,62 @@ import java.util.Date;
 
 public class RoomFragment extends Fragment {
     String roomtype = "";
-    String roombed = "";
-    String [] type = {"-Select Type-","VIP", "Economy"};
-    String [] bed = {"-Select Bed-","Single Bed", "Double Bed"};
+    String[] type = {"-Select Type-","VIP", "Economy"};
     String TAG = "Fragment Room";
     String datein, dateout;
-    ArrayAdapter<String> typeroom, bedroom;
+    ArrayAdapter<String> typeroom;
+    View rootView;
     Spinner spinnertype, spinnerbed;
-    int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari, totalcost2,qtyday2,qtyrooms;
-    Button min, plus;
+    private int jumlah=0, qty = 0, cost, total,costnew, total_bayar, totalhari, totalcost2,qtyday2,qtyrooms;
+    Button min, plus, pesan;
     TextView qtyday, qtybed , DisplayDateIn, DisplayDateOut,qtyroom, costroom ,totalcost, totalall;
     DatePickerDialog.OnDateSetListener DateListenerOut,DateListenerIn;
+    private HelperTransaksi dbHelper;
+    private SQLiteDatabase mDb;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        dbHelper = new HelperTransaksi(getActivity());
+        mDb = dbHelper.getWritableDatabase();
 
         View v = inflater.inflate(R.layout.fragment_room, container, false);
         qtyday = (TextView) v.findViewById(R.id.txtbetween);
         qtyroom =(TextView) v.findViewById(R.id.txtqtyrm);
         costroom = (TextView) v.findViewById(R.id.txtcost);
         totalcost = (TextView) v.findViewById(R.id.txttotalcost);
+        rootView = (View) v.findViewById(R.id.rootView);
         plus = (Button) v.findViewById(R.id.plsqty);
+        plus.setSelected(true);
+        plus.setFocusable(false);
+        plus.setKeyListener(null);
         plus.setOnClickListener(new klik_plus());
         min = (Button) v.findViewById(R.id.minusqty);
+        min.setSelected(true);
+        min.setFocusable(false);
+        min.setKeyListener(null);
         min.setOnClickListener(new klik_minus());
         spinnertype = (Spinner) v.findViewById(R.id.spinnertype);
         typeroom = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, type);
         typeroom.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnertype.setAdapter(typeroom);
-
-        spinnerbed = (Spinner) v.findViewById(R.id.spinnerbed);
-        bedroom = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, bed);
-        bedroom.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerbed.setAdapter(bedroom);
-
         qtybed = (TextView) v.findViewById(R.id.hslqtyroom);
 
         roomtype = spinnertype.getSelectedItem().toString();
-        roombed = spinnerbed.getSelectedItem().toString();
-        changeBed(roomtype, roombed);
+        changeBed(roomtype);
+        pesan = (Button)v.findViewById(R.id.btnpesan);
+        pesan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+            }
+        });
+
 
         spinnertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 roomtype = parentView.getItemAtPosition(position).toString();
-                changeBed(roomtype, roombed);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
-
-        spinnerbed.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                roombed = parentView.getItemAtPosition(position).toString();
-                changeBed(roomtype, roombed);
+                changeBed(roomtype);
             }
 
             @Override
@@ -162,11 +164,7 @@ public class RoomFragment extends Fragment {
                 datein = year + "/" + month + "/" + day; //day + "/" + month + "/" + year;
                 Log.d("Date In", datein);
                 DisplayDateIn.setText(datein);
-                if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
-                    totalcost.setText("0");
-                }else {
                     hitungTotal();
-                }
             }
         };
         DateListenerOut = new DatePickerDialog.OnDateSetListener() {
@@ -179,11 +177,7 @@ public class RoomFragment extends Fragment {
                     DisplayDateOut.setText(dateout);
                     String QtyNight = QtyDay(createDateString(DisplayDateIn.getText().toString()), createDateString(DisplayDateOut.getText().toString()));
                     qtyday.setText(QtyNight);
-                    if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
-                        totalcost.setText("0");
-                    }else {
                         hitungTotal();
-                    }
                 }
                 else {
                     Toast.makeText(getActivity(), "Take Your Date In First", Toast.LENGTH_LONG).show();
@@ -200,11 +194,16 @@ public class RoomFragment extends Fragment {
             }
             else{
                 jumlah++;
-                if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                if (qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")) {
                     totalcost.setText("0");
-                }else {
-                    hitungTotal();
+                } else {
+                    qtyday2 = Integer.parseInt(qtyday.getText().toString());
+                    costnew = Integer.parseInt(costroom.getText().toString());
+                    total = costnew * jumlah * qtyday2;
+                    totalcost.setText(Integer.toString(total));
                 }
+
+
             }
             qtyroom.setText(Integer.toString(jumlah));
         }
@@ -215,10 +214,13 @@ public class RoomFragment extends Fragment {
                 jumlah = 0;
             }else {
                 jumlah--;
-                if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
+                if (qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")) {
                     totalcost.setText("0");
-                }else {
-                    hitungTotal();
+                } else {
+                    qtyday2 = Integer.parseInt(qtyday.getText().toString());
+                    costnew = Integer.parseInt(costroom.getText().toString());
+                    total = costnew * jumlah * qtyday2;
+                    totalcost.setText(Integer.toString(total));
                 }
             }
             qtyroom.setText(Integer.toString(jumlah));
@@ -249,54 +251,24 @@ public class RoomFragment extends Fragment {
         }
         return date;
     }
-    public void changeBed(String roomtype, String roombed)
+    public void changeBed(String roomtype)
     {
-        if (roomtype.equals("Economy") && roombed.equals("Single Bed")){
+        if (roomtype.equals("Economy")){
             qty = 10;
             qtybed.setText(Integer.toString(qty));
             cost = 250000;
             costroom.setText(Integer.toString(cost));
-            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
-                totalcost.setText("0");
-            }else {
                 hitungTotal();
-            }
 
         }
-        else if (roomtype.equals("Economy") && roombed.equals("Double Bed")){
-            qty=25;
-            qtybed.setText(Integer.toString(qty));
-            cost = 300000;
-            costroom.setText(Integer.toString(cost));
-            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
-                totalcost.setText("0");
-            }else {
-                hitungTotal();
-            }
-        }
-        else if (roomtype.equals("VIP") && roombed.equals("Single Bed")){
+        else if (roomtype.equals("VIP")){
             qty=10;
             qtybed.setText(Integer.toString(qty));
             cost = 450000;
             costroom.setText(Integer.toString(cost));
-            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
-                totalcost.setText("0");
-            }else {
                 hitungTotal();
-            }
         }
-        else if (roomtype.equals("VIP") && roombed.equals("Double Bed")){
-            qty = 15;
-            qtybed.setText(Integer.toString(qty));
-            cost = 500000;
-            costroom.setText(Integer.toString(cost));
-            if(qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")){
-                totalcost.setText("0");
-            }else {
-                hitungTotal();
-            }
-        }
-    }
+     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -310,13 +282,62 @@ public class RoomFragment extends Fragment {
         cal.setTime(date);
         return cal;
     }
-    public void hitungTotal(){
+    public void hitungTotal() {
+        if (qtyday.getText().toString().matches("") || jumlah == 0 || costroom.getText().toString().matches("")) {
+            totalcost.setText("0");
+        } else {
 
             qtyday2 = Integer.parseInt(qtyday.getText().toString());
             qtyrooms = Integer.parseInt(qtyroom.getText().toString());
             costnew = Integer.parseInt(costroom.getText().toString());
             total = costnew * qtyrooms * qtyday2;
             totalcost.setText(Integer.toString(total));
+        }
+    }
+    public void save(){
+        String type = spinnertype.getItemAtPosition(Integer.parseInt(roomtype)).toString();
+        String qty = qtyroom.getText().toString();
+        String tanggalin = DisplayDateIn.getText().toString();
+        String tanggalout = DisplayDateOut.getText().toString();
+        String total = totalcost.getText().toString();
+        if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(qty) && !TextUtils.isEmpty(tanggalin) && !TextUtils.isEmpty(tanggalout) && !TextUtils.isEmpty(total)){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DatabaseTransaksi.TransaksiKamar.COLOUMN_TYPE, type);
+            contentValues.put(DatabaseTransaksi.TransaksiKamar.COLOUMN_QTYROOM, qty);
+            contentValues.put(DatabaseTransaksi.TransaksiKamar.COLOUMN_TANGGALIN, tanggalin);
+            contentValues.put(DatabaseTransaksi.TransaksiKamar.COLOUMN_TANGGALOUT, tanggalout);
+            contentValues.put(DatabaseTransaksi.TransaksiKamar.COLOUMN_TOTAL, total);
+
+            long result = mDb.insert(
+                    DatabaseTransaksi.TransaksiKamar.TABLE_NAME,
+                    null,
+                    contentValues
+            );
+            if(result > 0){
+                finish();
+                return;
+            }else {
+                Snackbar snackbar = Snackbar.make(
+                        rootView,
+                        "GAGAL",
+                        Snackbar.LENGTH_LONG
+                );
+                snackbar.show();
+            }
+        }
+        else {
+            Snackbar snackbar = Snackbar.make(
+                    rootView,
+                    "Silahkan isi form terlebih dahulu",
+                    Snackbar.LENGTH_LONG
+            );
+            snackbar.show();
+        }
+
+    }
+
+    private void finish() {
+        finish();
     }
 
 

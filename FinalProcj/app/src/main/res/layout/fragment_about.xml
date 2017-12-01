@@ -4,12 +4,62 @@
     android:layout_height="match_parent"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     tools:context="com.example.lukman.finalprocj.AboutFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="About Us" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:text="JigSaw Hotel V.01"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:text="Created By : "/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:text="Lukman Arief Cahyono"/>
+        <TextView
+            android:id="@+id/txtsupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:text="Supported By :"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/logo_stiki"
+            android:layout_width="193dp"
+            android:layout_height="200dp" />
+        <TextView
+            android:id="@+id/txtsupport1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:text="STIKI"/>
+
+    </LinearLayout>
 
 </FrameLayout>

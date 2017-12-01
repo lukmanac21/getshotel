@@ -1,10 +1,13 @@
 package com.example.lukman.finalprocj;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -40,7 +43,31 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(R.id.nav_home);
     }
 
-    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("exit");
+            //alertDialog.setIcon(R.drawable.appicon);
+
+            alertDialog.setMessage("Do you really want to log out?");
+            alertDialog.setButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                    return;
+                } });
+            alertDialog.setButton2("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    return;
+                }});
+            alertDialog.show();
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    /*@Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -48,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     private void displaySelectedScreen(int itemId) {
 
@@ -66,17 +93,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_getroom:
                 fragment = new RoomFragment();
                 break;
-            case R.id.nav_info:
-                fragment = new InfoFragment();
-                break;
             case R.id.nav_gallery:
                 fragment = new GaleryFragment();
                 break;
             case R.id.nav_about:
                 fragment = new AboutFragment();
                 break;
+            case R.id.nav_profil:
+                fragment = new ProfilFragment();
+                break;
             case R.id.nav_exit:
                 finish();
+                System.exit(0);
                 break;
             default: new BlankFragment();
         }

@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_menu_home"
             android:title="Home" />
         <item
+            android:id="@+id/nav_profil"
+            android:icon="@drawable/ic_menu_history"
+            android:title="History" />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gal"
             android:title="Gallery" />
@@ -19,17 +23,13 @@
             android:icon="@drawable/ic_menu_loc"
             android:title="GetMap" />
         <item
-            android:id="@+id/nav_info"
-            android:icon="@drawable/ic_menu_info"
-            android:title="Information" />
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_about"
+            android:title="About" />
     </group>
 
     <item android:title="Application">
         <menu>
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_about"
-                android:title="About" />
             <item
                 android:id="@+id/nav_exit"
                 android:icon="@drawable/ic_menu_exit"

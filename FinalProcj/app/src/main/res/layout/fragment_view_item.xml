@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    tools:context="com.example.lukman.finalprocj.BlankFragment">
+    tools:context="com.example.lukman.finalprocj.ViewItem">
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
 </FrameLayout>
